@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Hello, I'm Eddy{% endblock %}
+
+
+{% block content %}
+<div class="p-4">
+    <h1 class="title">Hello, I'm Eddy</h1>
+    <h3>A Developer</h3>
+    <img src="{{ url_for('static', filename='images/avatar_blue.png') }}" class="avatar"
+         alt="avatar">
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class=flashes>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+</div>
+{% endblock %}
