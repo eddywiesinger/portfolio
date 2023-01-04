@@ -31,6 +31,10 @@ footer {
 }
 
 
+.block-custom {
+    margin-bottom: 150px;
+}
+
 
 @media (min-width: 992px) {
     .form-container {

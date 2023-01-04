@@ -2,9 +2,9 @@ import os
 
 from flask import Flask, render_template, flash, redirect, url_for
 from flask_bootstrap import Bootstrap4
-from flask_wtf import FlaskForm
-from wtforms import SubmitField, PasswordField, StringField
-from wtforms.validators import DataRequired, Email, Length, EqualTo
+from flask_wtf import FlaskForm, RecaptchaField
+from wtforms import SubmitField, StringField, TextAreaField
+from wtforms.validators import DataRequired, Email, Length
 
 app = Flask(__name__, static_folder='static')
 app.secret_key = os.environ['APP_SECRET']
@@ -15,16 +15,19 @@ SECONDARY_COLOR = '#ffd03c'
 
 
 class ContactForm(FlaskForm):
-    name_first = StringField('First Name',
+    name_first = StringField('Your Name',
                              [DataRequired()])
-    name_last = StringField('Last Name',
-                            [DataRequired()])
-    email = StringField('Email Address', [DataRequired(),
+    email = StringField('Your Email', [DataRequired(),
                                           Email(), Length(min=6, max=50)])
-    password = PasswordField('New Password', [DataRequired(), EqualTo('confirm',
-                                                                      message='Passwords must match')
-                                              ])
-    confirm = PasswordField('Repeat Password')
+    body = TextAreaField(
+        'Your Message',
+        [
+            DataRequired(),
+            Length(min=4,
+                   message='Your message is too short.'),
+            Length(max=1000, message='Your message exceeds maximum length of 1000.')
+        ],
+    )
     submit = SubmitField('Submit')
 
 
