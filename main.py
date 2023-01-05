@@ -1,8 +1,9 @@
 import os
+import smtplib
 
 from flask import Flask, render_template, flash, redirect, url_for
 from flask_bootstrap import Bootstrap4
-from flask_wtf import FlaskForm, RecaptchaField
+from flask_wtf import FlaskForm
 from wtforms import SubmitField, StringField, TextAreaField
 from wtforms.validators import DataRequired, Email, Length
 
@@ -15,7 +16,7 @@ SECONDARY_COLOR = '#ffd03c'
 
 
 class ContactForm(FlaskForm):
-    name_first = StringField('Your Name',
+    name = StringField('Your Name',
                              [DataRequired()])
     email = StringField('Your Email', [DataRequired(),
                                           Email(), Length(min=6, max=50)])
@@ -40,6 +41,13 @@ def hello():
 def contact():
     form = ContactForm()
     if form.validate_on_submit():
+        with smtplib.SMTP('smtp.gmail.com') as connection:
+            msg = ("From: %s (%s)\r\nMessage: %s\r\n\r\n"
+                   % (form.name.data, form.email.data, form.body.data))
+            connection.starttls()
+            connection.login(user=os.environ.get("MAIL_SENDER"), password=os.environ.get("GMAIL_APP_PASSWORD"))
+            connection.sendmail(from_addr=os.environ.get("MAIL_SENDER"), to_addrs=os.environ.get("MAIL_RECIPIENT"), msg=f"Subject:New Message for Eddy Wi!\n\n{msg}")
+            #print("Successfully sent email")
         flash('Thank you for your message!')
         return redirect(url_for('hello'))
     return render_template('contact.html', form=form)
@@ -48,6 +56,9 @@ def contact():
 @app.route('/whatido')
 def whatido():
     return render_template('whatido.html')
+
+
+
 
 
 if __name__ == '__main__':

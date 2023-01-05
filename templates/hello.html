@@ -2,6 +2,9 @@
 
 {% block title %}Hello, I'm Eddy{% endblock %}
 
+{% block bgimage %}
+<img src="{{ url_for('static', filename='images/bg_image_2.jpg') }}" class="background-image" alt="">
+{% endblock %}
 
 {% block content %}
 <div class="p-4">

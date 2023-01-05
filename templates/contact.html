@@ -3,6 +3,10 @@
 
 {% block title %}Contact Me{% endblock %}
 
+{% block bgimage %}
+<img src="{{ url_for('static', filename='images/contact_bg.jpg') }}" class="background-image" alt="">
+{% endblock %}
+
 {% block content %}
 <h1>Contact Me</h1>
 <div class="form-container text-left">
