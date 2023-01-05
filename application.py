@@ -41,10 +41,10 @@ def hello():
 def contact():
     form = ContactForm()
     if form.validate_on_submit():
-        with smtplib.SMTP('smtp.gmail.com') as connection:
+        with smtplib.SMTP_SSL('smtp.gmail.com') as connection:
             msg = ("From: %s (%s)\r\nMessage: %s\r\n\r\n"
                    % (form.name.data, form.email.data, form.body.data))
-            connection.starttls()
+            #connection.starttls()
             connection.login(user=os.environ.get("MAIL_SENDER"), password=os.environ.get("GMAIL_APP_PASSWORD"))
             connection.sendmail(from_addr=os.environ.get("MAIL_SENDER"), to_addrs=os.environ.get("MAIL_RECIPIENT"),
                                 msg=f"Subject:New Message for Eddy Wi!\n\n{msg}")
