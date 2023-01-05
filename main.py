@@ -17,9 +17,9 @@ SECONDARY_COLOR = '#ffd03c'
 
 class ContactForm(FlaskForm):
     name = StringField('Your Name',
-                             [DataRequired()])
+                       [DataRequired()])
     email = StringField('Your Email', [DataRequired(),
-                                          Email(), Length(min=6, max=50)])
+                                       Email(), Length(min=6, max=50)])
     body = TextAreaField(
         'Your Message',
         [
@@ -46,8 +46,9 @@ def contact():
                    % (form.name.data, form.email.data, form.body.data))
             connection.starttls()
             connection.login(user=os.environ.get("MAIL_SENDER"), password=os.environ.get("GMAIL_APP_PASSWORD"))
-            connection.sendmail(from_addr=os.environ.get("MAIL_SENDER"), to_addrs=os.environ.get("MAIL_RECIPIENT"), msg=f"Subject:New Message for Eddy Wi!\n\n{msg}")
-            #print("Successfully sent email")
+            connection.sendmail(from_addr=os.environ.get("MAIL_SENDER"), to_addrs=os.environ.get("MAIL_RECIPIENT"),
+                                msg=f"Subject:New Message for Eddy Wi!\n\n{msg}")
+            # print("Successfully sent email")
         flash('Thank you for your message!')
         return redirect(url_for('hello'))
     return render_template('contact.html', form=form)
@@ -58,8 +59,4 @@ def whatido():
     return render_template('whatido.html')
 
 
-
-
-
-#if __name__ == '__main__':
-#    app.run(debug=True)
+application.run()
