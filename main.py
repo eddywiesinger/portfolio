@@ -7,9 +7,9 @@ from flask_wtf import FlaskForm
 from wtforms import SubmitField, StringField, TextAreaField
 from wtforms.validators import DataRequired, Email, Length
 
-app = Flask(__name__, static_folder='static')
-app.secret_key = os.environ['APP_SECRET']
-Bootstrap4(app)
+application = Flask(__name__, static_folder='static')
+application.secret_key = os.environ['APP_SECRET']
+Bootstrap4(application)
 
 PRIMARY_COLOR = '#1f4eff'
 SECONDARY_COLOR = '#ffd03c'
@@ -32,12 +32,12 @@ class ContactForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
-@app.route('/')
+@application.route('/')
 def hello():
     return render_template('hello.html')
 
 
-@app.route('/contact', methods=['GET', 'POST'])
+@application.route('/contact', methods=['GET', 'POST'])
 def contact():
     form = ContactForm()
     if form.validate_on_submit():
@@ -53,7 +53,7 @@ def contact():
     return render_template('contact.html', form=form)
 
 
-@app.route('/whatido')
+@application.route('/whatido')
 def whatido():
     return render_template('whatido.html')
 
