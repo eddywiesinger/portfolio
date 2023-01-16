@@ -15,8 +15,12 @@ footer {
 }
 
 .title {
-    font-size: 3.5rem;
+    font-size: 2rem;
     margin: 10px 0 20px 0;
+}
+
+.subtitle {
+    font-size: 1.2rem;
 }
 
 .avatar {
@@ -37,15 +41,15 @@ footer {
 
 
 .social-icons {
-    margin: 20px 0;
+    margin: 15px 0;
 }
 
 .social-icon {
-    margin: 0px 10px;
+    margin: 0px 15px;
 }
 
 .copyright-text {
-    margin-bottom: 30px;
+    margin-bottom: 13px;
 }
 
 
@@ -64,6 +68,16 @@ footer {
 @media (max-width: 480px) {
     .form-container {
         width: 80%;
+    }
+}
+
+@media (min-width: 500px) {
+    .title {
+        font-size: 3.5rem;
+        margin: 10px 0 20px 0;
+    }
+    .subtitle {
+        font-size: 2rem;
     }
 }
 

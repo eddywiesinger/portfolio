@@ -42,12 +42,13 @@ def contact():
     form = ContactForm()
     if form.validate_on_submit():
         with smtplib.SMTP_SSL('smtp.gmail.com') as connection:
+            mailbody = form.body.data
             msg = ("From: %s (%s)\r\nMessage: %s\r\n\r\n"
-                   % (form.name.data, form.email.data, form.body.data))
+                   % (form.name.data, form.email.data, mailbody))
             #connection.starttls()
             connection.login(user=os.environ.get("MAIL_SENDER"), password=os.environ.get("GMAIL_APP_PASSWORD"))
             connection.sendmail(from_addr=os.environ.get("MAIL_SENDER"), to_addrs=os.environ.get("MAIL_RECIPIENT"),
-                                msg=f"Subject:New Message for Eddy Wi!\n\n{msg}")
+                                msg=f"Subject:New Message for Eddy Wi!\n\n{msg}".encode("utf-8"))
             # print("Successfully sent email")
         flash('Thank you for your message!')
         return redirect(url_for('hello'))
