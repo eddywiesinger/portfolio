@@ -58,3 +58,5 @@ def contact():
 def whatido():
     return render_template('whatido.html')
 
+if __name__ == '__main__':
+    application.run(debug=True)
